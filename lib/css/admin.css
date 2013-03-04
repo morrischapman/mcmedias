@@ -1,0 +1,8 @@
+.editable:hover
+{
+/*  padding-left: 20px;*/
+  background-image: url('/modules/MCMedias/images/pencil.png');
+  background-repeat:no-repeat;
+/*  background-attachment:fixed;*/
+  background-position:right;
+}

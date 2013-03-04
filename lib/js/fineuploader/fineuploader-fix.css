@@ -1,0 +1,7 @@
+/* CMSMS STYLE FIX */
+.qq-upload-button {
+  width: 150px;
+}
+.qq-upload-button div {
+    text-align: center;
+}

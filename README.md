@@ -5,7 +5,7 @@ M&C Medias is an extension for CMS Forms & M&C Factory to allows you to create m
 
 ### Credits
 
-- Development by [Totophe][http://www.totophe.com]
-- Built by [Morris & Chapman][http://www.morris-chapman.com]
-- Built for [CMS Made Simple][http://www.cmsmadesimple.org]
+- Development by [Totophe](http://www.totophe.com)
+- Built by [Morris & Chapman](http://www.morris-chapman.com)
+- Built for [CMS Made Simple](http://www.cmsmadesimple.org)
 

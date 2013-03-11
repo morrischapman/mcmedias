@@ -21,7 +21,8 @@
     }
     
     $this->smarty->assign('collections', $collections);
-    $this->smarty->assign('mcmedias_params', $params);
   }
+
+  $this->smarty->assign('mcmedias_params', $params);
   
   echo $this->ProcessTemplateFor('default', $params);

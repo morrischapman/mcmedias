@@ -16,7 +16,7 @@ class MCMedias extends CMSModule
 
   public function GetName()             { return 'MCMedias'; }
   public function GetFriendlyName()     { return 'M&C Medias'; }
-  public function GetVersion()          { return '0.1.2'; }
+  public function GetVersion()          { return '0.1.4'; }
   public function GetHelp()             { return $this->Lang('help'); }
   public function GetAuthor()           { return 'Jean-Christophe Cuvelier';  }
   public function GetAuthorEmail()      { return 'jcc@morris-chapman.com';  }
@@ -99,7 +99,7 @@ class MCMedias extends CMSModule
     return true;
   }
   
-  public function DoEvent($originator, $eventname, $params) {
+  public function DoEvent($originator, $eventname, &$params) {
 		if (($eventname == 'CronDaily') || ($eventname == 'Cron15min')) {
 			// Do desired action here
       if($this->GetPreference('remote_gallery', false))

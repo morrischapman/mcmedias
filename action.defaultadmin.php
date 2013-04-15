@@ -47,8 +47,12 @@
   $form = new CMSForm('MCMedias', $id, 'defaultadmin', $returnid);
   
   $form->setWidget('option_tab', 'hidden', array('value' => 1));
-  $form->setWidget('remote_gallery', 'text', array('preference' => 'remote_gallery'));
-  $form->setWidget('enable_api', 'checkbox', array('preference' => 'enable_api'));
+
+	$sync_url = 	$api_url = $this->config->smart_root_url() . '/mcmedias/sync/all';
+  $form->setWidget('remote_gallery', 'text', array('preference' => 'remote_gallery', 'tips' => '<a href="'.$sync_url.'" ref="external" target="_new">Sync</a>'));
+
+	$api_url = $this->config->smart_root_url() . '/mcmedias/api/list';
+  $form->setWidget('enable_api', 'checkbox', array('preference' => 'enable_api', 'tips' => '<a href="'.$api_url.'" ref="external" target="_new">'.$api_url.'</a>'));
   
   if($form->isPosted())
   {
@@ -65,3 +69,8 @@
 
 
   echo $this->EndTabContent();
+
+	if(cms_utils::get_module('ModuleXtender'))
+	{
+		echo '<div style="margin-top: 15px;"><p>'.$this->CreateLink($id, 'migrateMX', $returnid, 'Migrate content from ModuleXtender', array(), '', false, true, ' class="pageback ui-state-default ui-corner-all"').'</p></div>';
+	}

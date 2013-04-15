@@ -25,11 +25,19 @@
     public function getId(){
       return $this->id;
     }
+
+		public function setId($id){
+			$this->id = $id;
+		}
     
     public function getTitle() {
       return $this->title;
     }
     
+		public function getCollectionId(){
+			return $this->collection_id;
+		}
+
     public function setTitle($value) {
       $this->title = $value;
     }
@@ -38,7 +46,18 @@
       $this->position = (int)$position;
     }
 
-    
+    public function setCreatedAt($created_at)	{
+			$this->created_at = $created_at;
+		}
+		
+		public function getUpdatedAt() {
+			return $this->updated_at;
+		}
+		
+		public function setUpdatedAt($updated_at) {
+			$this->updated_at = $updated_at;
+		}
+		
     public function getOriginalFilename() {
       return $this->original_filename;
     }
@@ -118,12 +137,77 @@
 
       /******************************************/
     }
+
+		public function uploadFromLocal($file, $move = true)
+		{
+			if(is_file($file))
+			{
+				$path = self::getUploadPath($this->collection_id);
+				
+				$filename = end(explode(DIRECTORY_SEPARATOR, $file));
+				
+				$this->original_filename = $filename;
+				$this->filename = $this->getNextAvailableFilename(self::cleanFilename($filename));
+				
+				if($move)
+				{
+					// var_dump($this->filename);
+					// var_dump($this->original_filename);					
+					rename($file, $path . DIRECTORY_SEPARATOR . $this->filename);
+				}
+				else
+				{
+					copy($file, $path . DIRECTORY_SEPARATOR . $this->filename);
+				}
+				
+			}
+		}
     
+		public function uploadFromUrl($url, $original_filename = '', $filename = ''){
+			
+			$local_path = self::getUploadPath($this->collection_id);
+			
+			if($filename != '')
+			{
+				$this->filename = $filename;
+				$this->original_filename = $original_filename;
+				
+				$image = file_get_contents($url);
+				if($image !== FALSE)
+				{
+					file_put_contents($local_path . DIRECTORY_SEPARATOR . $filename, $image);
+				}
+			}
+		}
+		
     public function downloadRemoteFile($url)  {
       $path = self::getUploadPath($this->collection_id);
       
       copy($url, $path . DIRECTORY_SEPARATOR . $this->filename);      
     }
+
+		public function getNextAvailableFilename($filename, $prefix = null)
+		{
+			$local_path = self::getUploadPath($this->collection_id);
+			
+			if(is_file($local_path . DIRECTORY_SEPARATOR . $prefix . $filename))
+			{
+				if(is_null($prefix)) 
+				{
+					$prefix = 1;
+				}
+				else
+				{
+					$prefix++;
+				}
+				return $this->getNextAvailableFilename($filename, $prefix);
+			}
+			else
+			{
+				return $prefix . $filename;
+			}
+			
+		}
 
     public static function getSystemSizeLimit() {
       $maxsize = ini_get('post_max_size');
@@ -164,7 +248,7 @@
     }
     
     // FILE PROCESSING
-    
+
     public function getFileSize($readable = false)  {
       $file = $this->getFilepath();
       if (is_file($file)) {
@@ -414,7 +498,7 @@
   		$items = self::doSelect($params);
   		if ($items)
   		{
-  			return $items[0];
+  			return current($items);
   		}
   		else 
   		{

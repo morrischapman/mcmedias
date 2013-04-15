@@ -16,7 +16,7 @@ class MCMedias extends CMSModule
 
   public function GetName()             { return 'MCMedias'; }
   public function GetFriendlyName()     { return 'M&C Medias'; }
-  public function GetVersion()          { return '0.1.4'; }
+  public function GetVersion()          { return '1.0.4'; }
   public function GetHelp()             { return $this->Lang('help'); }
   public function GetAuthor()           { return 'Jean-Christophe Cuvelier';  }
   public function GetAuthorEmail()      { return 'jcc@morris-chapman.com';  }
@@ -42,6 +42,8 @@ class MCMedias extends CMSModule
     $this->smarty->register_function('Thumbnail',  array('MCMedias','thumbnail'));
     
     $this->RegisterRoute('/mcmedias\/api\/(?P<command>[a-zA-Z0-9_-]+)(\/.*?)?$/', array('action' => 'api', 'showtemplate' => 'false','returnid' => cmsms()->GetContentOperations()->GetDefaultPageID()));
+
+    $this->RegisterRoute('/mcmedias\/sync\/(?P<command>[a-zA-Z0-9_-]+)(\/.*?)?$/', array('action' => 'sync', 'showtemplate' => 'false','returnid' => cmsms()->GetContentOperations()->GetDefaultPageID()));
     
     $this->RegisterRoute('/thumbnail\/(?P<width>[0-9]+)\/(?P<height>[0-9]+)\/(?P<src>[.\/a-zA-Z0-9_-]+)(\/.*?)?$/', array('action' => 'thumbnail', 'redirect' => true,  'showtemplate' => 'false','returnid' => cmsms()->GetContentOperations()->GetDefaultPageID()));
     

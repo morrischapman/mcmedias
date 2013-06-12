@@ -84,6 +84,7 @@ you want to unsinstall this fine module?',
 'serialized_datas' => 'PHP Serialized array',
 'download' => 'Download',
 
+'form_uploads_path' => 'Uploads path',
 'form_module' => 'Module',
 'form_select_module_for_migration' => 'Select the module you want to migrate',
 'form_fields' => 'Fields',

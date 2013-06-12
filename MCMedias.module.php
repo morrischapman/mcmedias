@@ -16,7 +16,7 @@ class MCMedias extends CMSModule
 
   public function GetName()             { return 'MCMedias'; }
   public function GetFriendlyName()     { return 'M&C Medias'; }
-  public function GetVersion()          { return '1.0.4'; }
+  public function GetVersion()          { return '1.0.8'; }
   public function GetHelp()             { return $this->Lang('help'); }
   public function GetAuthor()           { return 'Jean-Christophe Cuvelier';  }
   public function GetAuthorEmail()      { return 'jcc@morris-chapman.com';  }
@@ -66,9 +66,9 @@ class MCMedias extends CMSModule
     
     $html .= '
       <link href="'.$this->GetModuleURLPath().'/lib/css/admin.css" rel="stylesheet">  
-      <link href="'.$this->GetModuleURLPath().'/lib/js/fineuploader/fineuploader.css" rel="stylesheet">  
+      <link href="'.$this->GetModuleURLPath().'/lib/js/fineuploader/fineuploader-3.4.1.css" rel="stylesheet">  
       <link href="'.$this->GetModuleURLPath().'/lib/js/fineuploader/fineuploader-fix.css" rel="stylesheet">  
-      <script src="'.$this->GetModuleURLPath().'/lib/js/fineuploader/jquery.fineuploader-3.0.min.js"></script>
+      <script src="'.$this->GetModuleURLPath().'/lib/js/fineuploader/jquery.fineuploader-3.4.1.min.js"></script>
       <script src="'.$this->GetModuleURLPath().'/lib/js/jquery.jeditable.min.js"></script>
       ';
     

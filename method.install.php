@@ -20,8 +20,7 @@ $flds = array(
 $sql = $dict->CreateTableSQL(cms_db_prefix() . 'module_MCMedias_files', implode(',', $flds), array('mysql' => 'TYPE=MyISAM'));
 $dict->ExecuteSQLArray($sql);
 
-$this->SetPreference('uploads_path', $this->config['uploads_path']);
-
+// $this->SetPreference('uploads_path', $this->config['uploads_path']);
 
 $this->CreatePermission('Manage MCMedias', 'Manage MC Medias');
 

@@ -63,7 +63,7 @@
 		{
       $this->last_file = new MCFile($this->collection_id);
 			
-			$this->last_file->uploadFromLocal($file, $move);
+			return $this->last_file->uploadFromLocal($file, $move);
 		}
 
     public function addUploadedFile($fieldname)

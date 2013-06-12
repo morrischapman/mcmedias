@@ -15,6 +15,8 @@
     
     protected $created_at;
     protected $updated_at;
+
+		protected $last_error;
     
     const DB_NAME = 'module_MCMedias_files';
     
@@ -93,34 +95,35 @@
       $path = $MCMedias->GetPreference('uploads_path', $MCMedias->config['uploads_path']) . DIRECTORY_SEPARATOR . 'Modules' . DIRECTORY_SEPARATOR . 'MCMedias';
       
       if(!is_null($tail_path))  $path .= DIRECTORY_SEPARATOR . $tail_path;
-      if (!is_dir($path)) mkdir($path,0777,true);
+      if (!is_dir($path)){
+				 if(!mkdir($path,0777,true))
+				{					
+					$this->last_error = 'Impossible to create the path ' . $path;
+					return null;
+				}
+			}
       
       return $path;
     }
     
     public function saveUploadedFile($fieldname)  {
-      
-      /****************************************
-      Example of how to use this uploader class...
-      You can uncomment the following lines (minus the require) to use these as your defaults.
-      */
-      // list of valid extensions, ex. array("jpeg", "xml", "bmp")
-      $allowedExtensions = array();
-      // max file size in bytes
-      // $sizeLimit = 1024 * 1024 * 1024 * 1024; //1 Tb
-      
-      // $sizeLimit = 1024 * 1024 * 1024; //1 Tb 
-      $sizeLimit = self::getSystemSizeLimit(); //1 Tb
+     
+      $uploader = new qqFileUploader();
 
-      $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-
+			$path = self::getUploadPath($this->collection_id);
+			
+			if(is_null($path))
+			{
+				return json_encode(array('success' => false, 'error' => 'Impossible to create path for ' . $this->collection_id . ' with error ' . $this->last_error, 'preventRetry' => true));
+			}
+			
       // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-      $result = $uploader->handleUpload(self::getUploadPath($this->collection_id));
+      $result = $uploader->handleUpload($path,  self::cleanFilename($_FILES[$fieldname]['name']));
 
       if(isset($result['success']))
       {
         $this->original_filename = $uploader->getName();
-        $this->filename = $uploader->getUploadName(); // TODO: This do not gives a clean name...
+        $this->filename = $uploader->getUploadName();
         // $this->filename = self::cleanFilename($_FILES[$fieldname]['name']);
         
         $this->save();
@@ -138,8 +141,7 @@
       /******************************************/
     }
 
-		public function uploadFromLocal($file, $move = true)
-		{
+		public function uploadFromLocal($file, $move = true)	{
 			if(is_file($file))
 			{
 				$path = self::getUploadPath($this->collection_id);
@@ -186,8 +188,7 @@
       copy($url, $path . DIRECTORY_SEPARATOR . $this->filename);      
     }
 
-		public function getNextAvailableFilename($filename, $prefix = null)
-		{
+		public function getNextAvailableFilename($filename, $prefix = null)	{
 			$local_path = self::getUploadPath($this->collection_id);
 			
 			if(is_file($local_path . DIRECTORY_SEPARATOR . $prefix . $filename))

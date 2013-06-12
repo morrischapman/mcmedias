@@ -48,6 +48,8 @@
   
   $form->setWidget('option_tab', 'hidden', array('value' => 1));
 
+	$form->setWidget('uploads_path', 'text', array('preference' => 'uploads_path'));
+
 	$sync_url = 	$api_url = $this->config->smart_root_url() . '/mcmedias/sync/all';
   $form->setWidget('remote_gallery', 'text', array('preference' => 'remote_gallery', 'tips' => '<a href="'.$sync_url.'" ref="external" target="_new">Sync</a>'));
 

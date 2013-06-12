@@ -18,6 +18,8 @@ if(class_exists('CMSFormInputHidden'))
       
       $this->setSetting('admin_list_action', 'adminList');
 
+			$form->setMultipartForm();
+			
       return $this;
     }
     
@@ -44,7 +46,7 @@ if(class_exists('CMSFormInputHidden'))
       
       $module = cms_utils::get_module('MCMedias');
       $header = $module->loadHeader();
-      $uploader = $module->GetModuleURLPath() . '/uploader.php';
+      // $uploader = $module->GetModuleURLPath() . '/uploader.php';
       
       $url = self::cutUrl($module->CreateLink($this->id,'upload','','',array('collection_id' => $collection_id), '', true) . '&amp;suppressoutput=1&amp;showtemplate=0');
       

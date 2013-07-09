@@ -26,7 +26,7 @@ class MCMedias extends CMSModule
   public function GetAdminSection()     { return 'extensions';  }
   // public function GetAdminDescription()   { return $this->Lang('admindescription'); }
   public function VisibleToAdminUser()     { return $this->CheckAccess('Manage MC Medias');  }
-  public function CheckAccess($perm = '')  { return $this->CheckPermission($perm);  }
+  public function CheckAccess($perm = 'Manage MCMedias')  { return $this->CheckPermission($perm);  }
 
   public function GetDependencies()     { return array('CMSForms' => '1.0.3');  }
   public function MinimumCMSVersion()   { return "1.10";  }

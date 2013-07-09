@@ -50,7 +50,7 @@ if(class_exists('CMSFormInputHidden'))
       
       $url = self::cutUrl($module->CreateLink($this->id,'upload','','',array('collection_id' => $collection_id), '', true) . '&amp;suppressoutput=1&amp;showtemplate=0');
       
-      $module->smarty->assign('edit', str_replace('&amp;','&', $module->CreateLink($id,'editTitle','','',array(), '', true) . '&amp;suppressoutput=1&amp;showtemplate=0'));
+      $module->smarty->assign('edit', str_replace('&amp;','&', $module->CreateLink($this->id,'editTitle','','',array(), '', true) . '&amp;suppressoutput=1&amp;showtemplate=0'));
       
       // $config = cms_utils::get_config();
       
@@ -63,7 +63,7 @@ if(class_exists('CMSFormInputHidden'))
       $module->smarty->assign('params', json_encode($url['params']));
       $module->smarty->assign('uploadButtonText', $this->getSetting('upload_button_text'));
       $module->smarty->assign('fu_validation', $this->getSetting('validation'));      
-      
+      $module->smarty->assign('id', $this->id);
       $js = $module->ProcessTemplate('list.js');
         
       $html = $header . $list . '

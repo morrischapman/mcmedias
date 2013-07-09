@@ -1,7 +1,9 @@
 <?php
   if (!cmsms()) exit;
+
   if (!$this->CheckAccess()) {
-    return $this->DisplayErrorPage();
+    echo $this->Lang('accessdenied');
+    return false;
   }
 
   if(isset($params['collection_id']))

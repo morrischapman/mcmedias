@@ -95,7 +95,7 @@ you want to unsinstall this fine module?',
 <li>Version 0.0.1 - 1 November 2012. Initial Release.</li>
 </ul>',
 'help' => '
-<h3>Help</3>
+<h3>Help</h3>
 <p>To call a gallery, use {MCMedias collection_id="Your Collection ID" template="Your template"}. Template is not mandatory. You can also pass a list of collections IDs with param collection_ids and the collections ids separated by coma. You can pass params and recuperate them via {$mcmedias_params}</p>
 <h4>Thumbnails</h4>
 <p>To create thumbnails, use {MCMedias action="thumbnail" width=150 height=150 file=$file->getRelativePath()} which will create them in the cache directory.</p>
@@ -115,6 +115,8 @@ you want to unsinstall this fine module?',
 <h4>Divers</h4>
 <p>List of functions on a MCFile entry</p>
 <ul>
+  <li>getFilename()</li>
+  <li>getUrl()</li>
   <li>getFileSize()</li>
   <li>getFileExtension()</li>
   <li>getFileIcon()</li>

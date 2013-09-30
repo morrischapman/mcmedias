@@ -16,7 +16,7 @@ class MCMedias extends CMSModule
 
   public function GetName()             { return 'MCMedias'; }
   public function GetFriendlyName()     { return 'M&C Medias'; }
-  public function GetVersion()          { return '1.0.8'; }
+  public function GetVersion()          { return '1.0.11'; }
   public function GetHelp()             { return $this->Lang('help'); }
   public function GetAuthor()           { return 'Jean-Christophe Cuvelier';  }
   public function GetAuthorEmail()      { return 'jcc@morris-chapman.com';  }

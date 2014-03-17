@@ -6,7 +6,8 @@ $dict = NewDataDictionary($db);
 
 $flds = array(
 	'id I KEY AUTO',
-	'collection_id C(255)', // F****ing ORM
+    'remote_ID I',
+	'collection_id C(255)',
 	'created_at I',
 	'created_by I',
 	'updated_at I',

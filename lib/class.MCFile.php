@@ -5,6 +5,7 @@
     class MCFile
     {
         protected $id;
+        protected $remote_id;
         protected $collection_id;
 
         protected $position;
@@ -33,6 +34,16 @@
         public function setId($id)
         {
             $this->id = $id;
+        }
+
+        public function getRemoteId()
+        {
+            return $this->remote_id;
+        }
+
+        public function setRemoteId($id)
+        {
+            $this->remote_id = $id;
         }
 
         public function getTitle()
@@ -111,7 +122,9 @@
         public static function getUploadPath($tail_path = NULL)
         {
             $MCMedias = cms_utils::get_module('MCMedias');
-            $path     = $MCMedias->GetPreference('uploads_path', $MCMedias->config['uploads_path']) . DIRECTORY_SEPARATOR . 'Modules' . DIRECTORY_SEPARATOR . 'MCMedias';
+            $base = $MCMedias->GetPreference('uploads_path');
+            if(empty($base)) $base = $MCMedias->config['uploads_path'];
+            $path     = $base . DIRECTORY_SEPARATOR . 'Modules' . DIRECTORY_SEPARATOR . 'MCMedias';
 
             if (!is_null($tail_path)) $path .= DIRECTORY_SEPARATOR . $tail_path;
             if (!is_dir($path)) {
@@ -470,6 +483,9 @@
 
 
             $blank_image = imagecreatetruecolor($width, $height);
+            $white = imagecolorallocate($blank_image, 255, 255, 255);
+            imagefill($blank_image, 0, 0, $white); // Thumbnails with white background
+
             if (imagecopyresampled($blank_image, $new_image, 0, 0, 0, 0, $width, $height, $current_width, $current_height)) {
                 return $blank_image;
             } else {
@@ -503,6 +519,17 @@
         {
             return self::doSelectOne(array('where' => array('id' => (int)$id)));
         }
+
+
+        public static function retrieveByRemoteId($id)
+        {
+            return self::doSelectOne(array('where' => array('remote_id' => (int)$id)));
+        }
+
+        /**
+         * @param array $params
+         * @return MCFile
+         */
 
         public static function doSelectOne($params = array())
         {
@@ -563,6 +590,7 @@
         public function populate($row)
         {
             $this->id = $row['id'];
+            $this->remote_id = $row['remote_id'];
 
             $this->created_at = $row['created_at'];
             $this->updated_at = $row['updated_at'];
@@ -578,6 +606,7 @@
         {
             return array(
                 'id'                => $this->id,
+                'remote_id'         => $this->remote_id,
                 'created_at'        => $this->created_at,
                 'updated_at'        => $this->updated_at,
                 'collection_id'     => $this->collection_id,
@@ -643,7 +672,8 @@
             }
 
             $query = 'INSERT INTO ' . cms_db_prefix() . self::DB_NAME . '
-        SET 
+        SET
+          remote_id = ?,
           collection_id = ?,
           
           created_at = ?,
@@ -656,7 +686,9 @@
           filename = ?,
           original_filename = ?';
 
-            $values = array($this->collection_id,
+            $values = array(
+                $this->remote_id,
+                $this->collection_id,
                 time(),
                 $userid,
                 $updated_at,
